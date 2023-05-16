@@ -1,11 +1,35 @@
 import { HeartTwoTone, SmileTwoTone } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-components';
 import '@umijs/max';
-import { Alert, Card, Typography } from 'antd';
+import { history } from '@umijs/max';
+import { Alert, Button, Card, Typography } from 'antd';
+import { Divider } from 'rc-menu';
 import React from 'react';
+
 const Admin: React.FC = () => {
+  /**
+   * 处理事件跳转
+   */
+  const handleBtnClick = () => {
+    history.push('/admin/user-manager');
+  };
   return (
-    <PageContainer content={' 这个页面只有 admin 权限才能查看'}>
+    <PageContainer
+      header={{
+        title: '管理员页面',
+        ghost: true,
+        extra: [
+          <Button key="3" type="primary" onClick={handleBtnClick}>
+            用户管理
+          </Button>,
+        ],
+      }}
+      tabProps={{
+        type: 'editable-card',
+        hideAdd: true,
+        onEdit: (e, action) => console.log(e, action),
+      }}
+    >
       <Card>
         <Alert
           message={'更快更强的重型组件，已经发布。'}
@@ -23,7 +47,9 @@ const Admin: React.FC = () => {
             textAlign: 'center',
           }}
         >
-          <SmileTwoTone /> User Center Backend <HeartTwoTone twoToneColor="#eb2f96" /> You
+          <SmileTwoTone /> User Center <HeartTwoTone twoToneColor="#eb2f96" /> You
+          <Divider />
+          点击右上角进入子菜单界面
         </Typography.Title>
       </Card>
       <p

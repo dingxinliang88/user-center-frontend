@@ -9,6 +9,11 @@ import { errorConfig } from './requestErrorConfig';
 import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
+const registerPath = '/user/register';
+/**
+ * 不需要登录的路径
+ */
+const NO_NEED_LOGIN_PATH = [registerPath, loginPath];
 
 /**
  * @see  https://umijs.org/zh-CN/plugins/plugin-initial-state
@@ -28,9 +33,9 @@ export async function getInitialState(): Promise<{
     }
     return undefined;
   };
-  // 如果不是登录页面，执行
+  // 如果不是免登录页面，执行
   const { location } = history;
-  if (location.pathname !== loginPath) {
+  if (!NO_NEED_LOGIN_PATH.includes(location.pathname)) {
     const currentUser = await fetchUserInfo();
     return {
       currentUser,
