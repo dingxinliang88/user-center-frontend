@@ -3,7 +3,7 @@ import { getLoginUserVOUsingGET, userLoginUsingPOST } from '@/services/user-cent
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginForm, ProFormText } from '@ant-design/pro-components';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
-import { Helmet, Link, history, useModel } from '@umijs/max';
+import { Helmet, history, Link, useModel } from '@umijs/max';
 import { message, Tabs } from 'antd';
 import React, { useState } from 'react';
 import { flushSync } from 'react-dom';
@@ -32,7 +32,7 @@ const Login: React.FC = () => {
       flushSync(() => {
         setInitialState((s) => ({
           ...s,
-          currentUser: userInfo,
+          currentUser: userInfo.data,
         }));
       });
     }
@@ -146,7 +146,7 @@ const Login: React.FC = () => {
               marginBottom: 24,
             }}
           >
-            <Link to='/user/register'>还没有账号？注册一个</Link>
+            <Link to="/user/register">还没有账号？注册一个</Link>
           </div>
         </LoginForm>
       </div>

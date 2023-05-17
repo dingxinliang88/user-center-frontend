@@ -6,7 +6,7 @@ import type { RunTimeLayoutConfig } from '@umijs/max';
 import { history, Link } from '@umijs/max';
 import { AvatarDropdown, AvatarName } from './components/RightContent/AvatarDropdown';
 import { errorConfig } from './requestErrorConfig';
-import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
+import { getLoginUserVOUsingGET } from './services/user-center/userController';
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
 const registerPath = '/user/register';
@@ -20,13 +20,10 @@ const NO_NEED_LOGIN_PATH = [registerPath, loginPath];
  * */
 export async function getInitialState(): Promise<{
   currentUser?: API.UserVO;
-  fetchUserInfo?: () => Promise<API.UserVO | undefined>;
 }> {
   const fetchUserInfo = async () => {
     try {
-      const msg = await queryCurrentUser({
-        skipErrorHandler: true,
-      });
+      const msg = await getLoginUserVOUsingGET();
       return msg.data;
     } catch (error) {
       history.push(loginPath);
@@ -106,7 +103,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
           <SettingDrawer
             disableUrlParams
             enableDarkTheme
-            settings={initialState?.settings}
+            // settings={initialState?.settings}
             onSettingChange={(settings) => {
               setInitialState((preInitialState) => ({
                 ...preInitialState,
@@ -117,7 +114,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
         </>
       );
     },
-    ...initialState?.settings,
+    // ...initialState?.settings,
   };
 };
 
