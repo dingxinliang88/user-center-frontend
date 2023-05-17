@@ -124,7 +124,8 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
  * @doc https://umijs.org/docs/max/request#配置
  */
 export const request = {
-  baseURL: process.env.NODE_ENV === 'production' ? 'http://8.130.102.239:8080':'http://localhost:8101',
+  // todo
+  baseURL: process.env.NODE_ENV === 'production' ? '后端请求地址' : 'http://localhost:8101',
   withCredentials: true,
   ...errorConfig,
 };
