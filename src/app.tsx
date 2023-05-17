@@ -124,7 +124,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
  * @doc https://umijs.org/docs/max/request#配置
  */
 export const request = {
-  baseURL: 'http://localhost:8101',
+  baseURL: process.env.NODE_ENV === 'production' ? 'http://user-center.codejuzi.icu':'http://localhost:8101',
   withCredentials: true,
   ...errorConfig,
 };
