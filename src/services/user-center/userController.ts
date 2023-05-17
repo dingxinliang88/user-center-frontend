@@ -25,6 +25,14 @@ export async function deleteUserUsingDELETE(
   });
 }
 
+/** listUserVO GET /api/user/list */
+export async function listUserVOUsingGET(options?: { [key: string]: any }) {
+  return request<API.BaseResponseListUserVO_>('/api/user/list', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
+
 /** userLogin POST /api/user/login */
 export async function userLoginUsingPOST(
   body: API.UserLoginRequest,

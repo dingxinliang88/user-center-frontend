@@ -1,17 +1,19 @@
+import { listUserVOUsingGET } from '@/services/user-center/userController';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
-import { ProTable, TableDropdown } from '@ant-design/pro-components';
-import { Image } from 'antd';
+import { ProTable } from '@ant-design/pro-components';
+import { Image, message, Tag } from 'antd';
 import { useRef } from 'react';
 
 const columns: ProColumns<API.UserVO>[] = [
   {
+    title: 'id',
     dataIndex: 'id',
     valueType: 'indexBorder',
     width: 48,
   },
   {
-    title: '用户名',
-    dataIndex: 'username',
+    title: '用户昵称',
+    dataIndex: 'userName',
     copyable: true,
   },
   {
@@ -21,7 +23,7 @@ const columns: ProColumns<API.UserVO>[] = [
   },
   {
     title: '头像',
-    dataIndex: 'avatarUrl',
+    dataIndex: 'userAvatar',
     render: (_, record) => (
       <div>
         <Image src={record.userAvatar} width={50} />
@@ -31,7 +33,12 @@ const columns: ProColumns<API.UserVO>[] = [
   {
     title: '性别',
     dataIndex: 'gender',
-    copyable: true,
+    copyable: false,
+    valueEnum: {
+      0: { text: <Tag color="success">男</Tag> },
+      1: { text: <Tag color="error">女</Tag> },
+    },
+    align: 'center',
   },
   {
     title: '电话',
@@ -43,14 +50,6 @@ const columns: ProColumns<API.UserVO>[] = [
     dataIndex: 'email',
     copyable: true,
   },
-  // {
-  //   title: '状态',
-  //   dataIndex: 'userStatus',
-  // },
-  {
-    title: '星球编号',
-    dataIndex: 'planetCode',
-  },
   {
     title: '角色',
     dataIndex: 'userRole',
@@ -60,6 +59,10 @@ const columns: ProColumns<API.UserVO>[] = [
       1: {
         text: '管理员',
         status: 'Success',
+      },
+      2: {
+        text: '被封号',
+        status: 'Error',
       },
     },
   },
@@ -77,22 +80,15 @@ const columns: ProColumns<API.UserVO>[] = [
       <a
         key="editable"
         onClick={() => {
-          action?.startEditable?.(record.id);
+          // todo 编辑用户
+          message.info('尚未开发～～');
         }}
       >
         编辑
       </a>,
-      <a href={record.url} target="_blank" rel="noopener noreferrer" key="view">
-        查看
+      <a href={record.userAvatar} target="_blank" rel="noopener noreferrer" key="view">
+        查看头像
       </a>,
-      <TableDropdown
-        key="actionGroup"
-        onSelect={() => action?.reload()}
-        menus={[
-          { key: 'copy', name: '复制' },
-          { key: 'delete', name: '删除' },
-        ]}
-      />,
     ],
   },
 ];
@@ -101,15 +97,15 @@ export default () => {
   const actionRef = useRef<ActionType>();
   // @ts-ignore
   return (
-    <ProTable<API.CurrentUser>
+    <ProTable<API.UserVO>
       columns={columns}
       actionRef={actionRef}
       cardBordered
       request={async (params = {}, sort, filter) => {
         console.log(sort, filter);
-        const userList = await searchUsers();
+        const userList = await listUserVOUsingGET();
         return {
-          data: userList,
+          data: userList?.data,
         };
       }}
       editable={{

@@ -23,7 +23,6 @@ export default [
       { path: '/admin/user-manager', component: './Admin/UserManager' },
     ],
   },
-  { icon: 'table', path: '/list', component: './TableList', name: '表格页' },
   { path: '/', redirect: '/welcome' },
   { path: '*', layout: false, component: './404' },
 ];
